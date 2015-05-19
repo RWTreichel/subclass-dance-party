@@ -35,5 +35,29 @@ describe('ColourfulBlinker', function() {
       clock.tick(timeBetweenSteps);
       expect(colourfulBlinker.step.callCount).to.be.equal(2);
     });
+
+    it("should call changeColor at each step", function() {
+      sinon.spy(colourfulBlinker, "changeColor");
+      expect(colourfulBlinker.changeColor.callCount).to.eql(0);
+      colourfulBlinker.step();
+      expect(colourfulBlinker.changeColor.callCount).to.eql(1);
+    });
+  });
+
+  describe("changeColor", function(){
+    it("should exist", function() {
+      expect(typeof colourfulBlinker.changeColor).to.eql('function');
+    });
+
+    it("should call changeColor with three arguments", function() {
+      expect(colourfulBlinker.changeColor.length).to.eql(3);
+    });
+
+    it("should change color when changeColor is called", function() {
+      colourfulBlinker.$node.css('border-color', 'rgb(20,20,20)');
+      expect(colourfulBlinker.$node.css('border-color')).to.eql('rgb(20, 20, 20)');
+      colourfulBlinker.changeColor(30,30,30);
+      expect(colourfulBlinker.$node.css('border-color')).to.eql('rgb(30, 30, 30)');
+    });
   });
 });
