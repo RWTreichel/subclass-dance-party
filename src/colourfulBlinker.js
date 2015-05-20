@@ -4,6 +4,7 @@ var ColourfulBlinker = function (top, left, timeBetweenSteps) {
   var oldStep = this.step;
 
   this.step = function () {
+    // todo: why can't we call the method defined on the prototype of Dancer or BlinkyDancer
     oldStep.call(this);
 
     this.changeColor(APP.randomRGB());

@@ -23,7 +23,7 @@ describe('ColourfulBlinker', function() {
     expect(colourfulBlinker.$node.toggle.called).to.be.true;
   });
 
-  describe("dance", function(){
+  describe("step", function(){
     it("should call step at least once per second", function(){
       sinon.spy(colourfulBlinker, "step");
       expect(colourfulBlinker.step.callCount).to.be.equal(0);
@@ -35,21 +35,15 @@ describe('ColourfulBlinker', function() {
       clock.tick(timeBetweenSteps);
       expect(colourfulBlinker.step.callCount).to.be.equal(2);
     });
-
-    it("should call changeColor at each step", function() {
-      sinon.spy(colourfulBlinker, "changeColor");
-      expect(colourfulBlinker.changeColor.callCount).to.eql(0);
-      colourfulBlinker.step();
-      expect(colourfulBlinker.changeColor.callCount).to.eql(1);
-    });
   });
+
 
   describe("changeColor", function(){
     it("should exist", function() {
       expect(typeof colourfulBlinker.changeColor).to.eql('function');
     });
 
-    it("should call changeColor with one argument", function() {
+    it("should be called with one argument", function() {
       expect(colourfulBlinker.changeColor.length).to.eql(1);
     });
 
@@ -58,6 +52,13 @@ describe('ColourfulBlinker', function() {
       expect(colourfulBlinker.$node.css('border-color')).to.eql('rgb(20, 20, 20)');
       colourfulBlinker.changeColor('rgb(30,30,30)');
       expect(colourfulBlinker.$node.css('border-color')).to.eql('rgb(30, 30, 30)');
+    });
+
+    it("should be called at each step", function() {
+      sinon.spy(colourfulBlinker, "changeColor");
+      expect(colourfulBlinker.changeColor.callCount).to.eql(0);
+      colourfulBlinker.step();
+      expect(colourfulBlinker.changeColor.callCount).to.eql(1);
     });
   });
 });
